@@ -2,7 +2,7 @@
 
 Documento técnico
 
-> Equipo Veyon · Repositorio https://github.com/VEYON-DEV/more-than-a-hack-2027-veyon · Archivo `Veyon.csv`
+Grupo: Veyon
 
 ---
 
@@ -174,14 +174,46 @@ En el Barça–Athletic comparamos el modelo base con el final sin disponer de u
 
 ## 9. Reproducción
 
+Probamos la solución con Python 3.9.6 en macOS sobre Apple Silicon.
+
+### 1. Clonar el repositorio
+
 ```bash
-python3 -m venv .venv       && .venv/bin/pip install -r requirements-solution.txt
-python3 -m venv .venv-torch && .venv-torch/bin/pip install -r requirements-torch.txt
-# datos del partido en data/ (ver data/README.md); IDSSE se descarga solo
+git clone https://github.com/VEYON-DEV/more-than-a-hack-2027-veyon.git
+cd more-than-a-hack-2027-veyon
+```
+
+### 2. Copiar los datos del partido
+
+Los datos del Barça–Athletic no están en el repositorio. Hay que copiar el paquete del reto en `data/`, con la estructura oficial descrita en `data/README.md` (`data/tactical/` y `data/broadcast/`).
+
+Los partidos de IDSSE que usamos para el entrenamiento se descargan automáticamente en la primera ejecución.
+
+### 3. Instalar los entornos
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements-solution.txt
+
+python3 -m venv .venv-torch
+.venv-torch/bin/pip install -r requirements-torch.txt
+```
+
+Usamos dos entornos porque PyTorch requiere una versión distinta de NumPy.
+
+### 4. Generar el archivo
+
+```bash
 .venv/bin/python solution/run_all.py --out evaluation/results/Veyon.csv
 ```
 
-- Probamos la solución con Python 3.9.6 en macOS sobre Apple Silicon. Las redes se pueden ejecutar en GPU (MPS o CUDA) o en CPU.
-- Usamos los pesos guardados en `solution/models/` porque el entrenamiento en GPU no es determinista bit a bit. Con esos pesos, el archivo generado coincide byte a byte con el que entregamos.
+### 5. Resultado esperado
+
+- El comando termina validando el CSV con `evaluation/validate_submission.py`.
+- El archivo coincide byte a byte con el que entregamos. Su MD5 es `4bb7df9f77f1f7d46a87a68adedc688d`.
+- Desde cero tarda unos 16 minutos en un MacBook con Apple Silicon. La mayor parte del tiempo se dedica a leer el video.
+
+### Notas
+
+- Usamos los pesos guardados en `solution/models/` porque el entrenamiento en GPU no es determinista bit a bit. La predicción da el mismo archivo en GPU (MPS) y en CPU.
 - La opción `--retrain` vuelve a entrenar las 12 redes desde cero con los mismos parámetros.
-- Desde cero, el proceso tarda unos 16 minutos en un MacBook con Apple Silicon. La mayor parte del tiempo se dedica a leer el video.
