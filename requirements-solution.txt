@@ -1,0 +1,16 @@
+# Dependencias fijadas de la solución (solution/), incluidas las transitivas. Probado con Python 3.9.6 en macOS arm64.
+numpy==2.0.2
+pandas==2.3.3
+python-dateutil==3.0.0
+pytz==2026.6
+tzdata==2026.6
+six==1.17.0
+opencv-python-headless==5.0.0.93
+# gradient boosting y detector de cambios
+scikit-learn==1.6.1
+scipy==1.13.1
+joblib==1.5.3
+threadpoolctl==3.7.0
+# Viterbi y filtros acelerados
+numba==0.60.0
+llvmlite==0.43.0

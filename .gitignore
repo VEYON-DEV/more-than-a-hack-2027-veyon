@@ -62,3 +62,6 @@ __pycache__/
 venv/
 env/
 .DS_Store
+
+# entorno aparte para PyTorch (solution/)
+.venv-*/
